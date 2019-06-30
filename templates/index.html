@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container-fluid total-body">
+    <!-- container start -->
+    <div class="container my-container">
+        <!-- topbar start -->
+        <div class="row">
+            <div class="col-md-12 top-row"></div>
+        </div>
+        <!-- topbar end -->
+        <!-- sidebar start -->
+        <div class="row">
+        <div class="col-md-2" style="padding-left:0px">
+            <div class="col-md-12 sidebar" style="padding:0px">
+                <div class="col-md-12 sidebar-tabs">
+                    Salarytest
+                </div>
+                <div class="col-md-12 sidebar-tabs">
+                    Traingtest
+                </div>
+                <div class="col-md-12 sidebar-tabs">
+                    XXXXXXXX
+                </div>
+            </div>
+        </div>
+        <!-- sidebar end -->
+        <!-- contentbar start -->
+        <div class="col-md-10" style="padding-right:0px">
+            <div class="col-md-12 content" style="padding:0px;">
+                {% include 'navbar.html' %}
+                <!-- radio buttons -->
+                <div class="row" style="padding-left:10px">
+                    <div class="col-md-4" style="text-align: auto; padding-top: 25px">
+                        {% if filter_data %}
+                        <form method="POST" action="/employee/{{mydb}}/" manager_url="/managers/" id="manager_filter">{% csrf_token %}
+                        {% else %}
+                        <form method="POST" action="/employee/{{emp_type}}/" manager_url="/managers/" id="manager_filter">{% csrf_token %}
+                        {% endif %}
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" id="country" name="country" value="IND" onclick="myCountry();">
+                            <label class="form-check-label" for="inlineRadio1">IND</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" id="country" name="country"  value="UK" onclick="myCountry();">
+                            <label class="form-check-label" for="inlineRadio2">UK</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" id="country" name="country"  value="US" onclick="myCountry();">
+                            <label class="form-check-label" for="inlineRadio3">US</label>
+                        </div> 
+                    </div>
+                    <!-- weather table -->
+                    <div class="col-md-8" >
+                        <div class="col-md-12">
+                            {% include 'weather_table.html' %}
+                        </div>   
+                    </div>
+                    <!-- weather table end -->
+                </div>
+                <!-- radio buttons end -->
+                <!-- dropdown menu start -->
+                <select class="custom-select" id="department" name="department" style="width:100px; font-size: 10px;margin: 1px;">
+                        <option value="HR">HR</option>
+                        <option value="OP">OP</option>
+                        <option value="AD">AD</option>
+                    </select>
+                    <select class="custom-select" id="managers" name="managers"  style="width:100px;font-size: 10px">
+                    </select>
+                    <input class="btn btn-primary btn-sm" type="submit" value="filter"></input>  
+                </form>
+                <!-- dropdownmenu end -->
+                <div class="row" style="margin:0px">
+                    <div class="col-md-6" style="padding-left:0px;padding-right: 0px">
+                        {% if html %}
+                       <div class="col-md-12" style="overflow:scroll;height: 386px;padding-left: 0px">
+                            {% autoescape off %}
+                                {{ html }}
+                            {% endautoescape %} 
+                       </div>
+                       {% elif emp_type %}
+                       <div class="col-md-12" style="overflow:scroll;height: 386px;padding-left: 0px">
+                            {% autoescape off %}
+                                {{ html1 }}
+                            {% endautoescape %} 
+                       </div>
+                       {% else %}
+                       <div class="col-md-12" style="overflow:scroll;height:386px;padding-left: 0px">
+                            {% autoescape off %}
+                                {{ filter_data }}
+                            {% endautoescape %} 
+                       </div>
+                       {% endif %}
+                    </div>
+                    {% if filter_data %}
+                    <div class="col-md-6 graph"  style="padding-left:0px;padding-right: 0px"> 
+                        <div class="col-md-12" style="overflow:scroll;height:386px;padding-left: 0px">
+                            <div id="chart-1">{{ output|safe }}</div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="col-md-6 graph"  style="padding-left:0px;padding-right: 0px"> 
+                        <div class="col-md-12 text-center" style="overflow:scroll;height:386px;padding-left: 0px">
+                            <div id="chart-1"><h1>Graph Area</h1></div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <!-- contentbar end -->
+    </div>
+    <!-- container end -->
+</div>
+{% endblock %}

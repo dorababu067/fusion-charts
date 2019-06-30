@@ -1,0 +1,18 @@
+<table class="table table-bordered" id ="weathere_table" style="width:700px;float: right;padding:0px" >
+        <thead>
+          <tr>
+            <th scope="col" style="width: 5%">Region</th>
+            <th scope="col" style="width: 10%">Live Temprature</th>
+            <th scope="col" style="width: 70%">Latest News</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for city,latest in temp_news %}
+            <tr>
+                <td>{{ city.city }}</td>
+                <td>{{ city.temp }}<sup>o</sup> C</td>
+                <td><a href="{{ latest.url }}" style="color:black">{{ latest.news }} </a></td>
+          {% endfor %}
+          </tr>
+        </tbody>
+</table>
